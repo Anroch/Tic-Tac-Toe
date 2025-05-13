@@ -51,7 +51,7 @@ class BoardDetector:
         # cv2.waitKey(0)
 
         contours, _ = cv2.findContours(t, 1, cv2.CHAIN_APPROX_SIMPLE)
-        conts = cv2.drawContours(np.zeros(img.shape[:2], np.uint8), contours, -1, (255,255,255), 4)
+        conts = cv2.drawContours(np.zeros(img.shape[:2], np.uint8), contours, -1, (255,255,255), 4) # pyright: ignore
         cv2.imshow('asdf', conts)
         cv2.waitKey(0)
 
@@ -64,7 +64,7 @@ class BoardDetector:
             maxLineGap=0,
         )
 
-        intersections: tuple[int, int] = []
+        intersections: tuple[int, int] = [] # pyright: ignore
         out = cv2.cvtColor(conts.copy(), cv2.COLOR_GRAY2BGR)
 
         def dist_points(a: tuple[int, int], b: tuple[int, int]):
@@ -73,8 +73,8 @@ class BoardDetector:
 
         i = True
         for line in lines:
-            x1, y1, x2, y2 = line[0]
-            cv2.line(out, (x1, y1), (x2, y2), (0,255,0) if i else (255,0,0), 1)
+            x1, y1, x2, y2 = line[0] # pyright: ignore
+            cv2.line(out, (x1, y1), (x2, y2), (0,255,0) if i else (255,0,0), 1) # pyright: ignore
             i = not i
 
         cv2.imshow('out', out)
@@ -88,12 +88,12 @@ class BoardDetector:
 
                 if intr:
                     for point in intersections:
-                        d = dist_points(intr, point)
+                        d = dist_points(intr, point) # pyright: ignore
                         print(d, point, intr)
                         if d < 15: break
                     else:
                         print('a')
-                        intersections.append(intr)
+                        intersections.append(intr) # pyright: ignore
                         cv2.circle(out, intr, 3, (255,0,255), 3)
 
         print(len(intersections))
@@ -119,7 +119,7 @@ class BoardDetector:
         if div == 0:
             return None  # Lines are parallel or coincident
 
-        d = (det(p1, p2), det(p3, p4))
+        d = (det(p1, p2), det(p3, p4)) # pyright: ignore
         x = det(d, xdiff) / div
         y = det(d, ydiff) / div
 
@@ -135,7 +135,7 @@ class BoardDetector:
             return None  # Intersection point not within both segments
 
 
-    def __detect_slot(self, slot: MatLike) -> BoardSlot:
+    def __detect_slot(self, slot: MatLike) -> BoardSlot: # pyright: ignore
         """
         Returns the shape within the slot. To be used within self.detect_board().
         """

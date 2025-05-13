@@ -34,12 +34,12 @@ class TicTacToeAI:
         detector = BoardDetector()
 
         while True:
-            ok, frame = detector.cam.read()
+            ok, frame = detector.cam.read() # pyright: ignore
             if not ok:
                 print('Error reading')
                 return
 
-            board = detector.detect_board(frame)
+            board = detector.detect_board(frame) # pyright: ignore
 
             if board:
                 highlight = None
